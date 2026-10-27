@@ -1,0 +1,8 @@
+#!/bin/sh
+# Abre/fecha o overlay. Se ele já está rodando, só manda o sinal via D-Bus (instantâneo);
+# caso contrário, inicia o app.
+gdbus call --session \
+    --dest dev.miguel.OverlayDev \
+    --object-path /dev/miguel/OverlayDev \
+    --method org.freedesktop.Application.Activate "{}" >/dev/null 2>&1 \
+    || exec python3 "$(dirname "$(readlink -f "$0")")/overlay.py"
